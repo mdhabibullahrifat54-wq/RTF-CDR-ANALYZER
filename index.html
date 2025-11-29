@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RTF CDR Analyzer v2.0</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+<body>
+    <!-- Login Screen -->
+    <div id="loginScreen" class="login-container">
+        <div class="login-box">
+            <div class="login-header">
+                <h1><i class="fas fa-chart-line"></i> RTF CDR Analyzer</h1>
+                <p>v2.0 - Complete CDR Analysis Solution</p>
+            </div>
+            <form id="loginForm" class="login-form">
+                <div class="input-group">
+                    <label for="username"><i class="fas fa-user"></i> Username</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <div class="input-group">
+                    <label for="password"><i class="fas fa-lock"></i> Password</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <button type="submit" class="login-btn">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </button>
+            </form>
+            <div class="login-footer">
+                <p>Developer: Rifat Ahmed | Contact: 01760502222</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Application (Hidden until login) -->
+    <div id="app" class="app-container hidden">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-left">
+                <h1><i class="fas fa-chart-line"></i> RTF CDR Analyzer</h1>
+                <span class="version">v2.0</span>
+            </div>
+            <div class="header-right">
+                <span class="user-info"><i class="fas fa-user"></i> admin_rifat</span>
+                <button id="logoutBtn" class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+        </header>
+
+        <!-- Navigation Tabs -->
+        <nav class="app-nav">
+            <div class="nav-tabs">
+                <button class="tab-btn active" data-tab="dashboard">
+                    <i class="fas fa-tachometer-alt"></i> Dashboard
+                </button>
+                <button class="tab-btn" data-tab="track">
+                    <i class="fas fa-search-location"></i> Track & Trace
+                </button>
+                <button class="tab-btn" data-tab="contacts">
+                    <i class="fas fa-address-book"></i> Contact Analysis
+                </button>
+                <button class="tab-btn" data-tab="graphs">
+                    <i class="fas fa-chart-bar"></i> Graphs & Visualization
+                </button>
+                <button class="tab-btn" data-tab="search">
+                    <i class="fas fa-search"></i> Search Results
+                </button>
+            </div>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="app-main">
+            <!-- Dashboard Tab -->
+            <div id="dashboard" class="tab-content active">
+                <div class="tab-header">
+                    <h2><i class="fas fa-tachometer-alt"></i> Dashboard Overview</h2>
+                    <button id="uploadBtn" class="upload-btn">
+                        <i class="fas fa-upload"></i> Upload CDR File
+                    </button>
+                </div>
+                
+                <!-- File Upload Section -->
+                <div id="uploadSection" class="upload-section">
+                    <div class="upload-box">
+                        <i class="fas fa-file-upload"></i>
+                        <h3>Upload CDR File</h3>
+                        <p>Supported formats: Excel (.xlsx, .xls), CSV (.csv), Text (.txt)</p>
+                        <input type="file" id="fileInput" accept=".xlsx,.xls,.csv,.txt" hidden>
+                        <button id="browseBtn" class="browse-btn">Browse Files</button>
+                        <div id="fileInfo" class="file-info"></div>
+                    </div>
+                </div>
+
+                <!-- Statistics Cards -->
+                <div id="statsSection" class="stats-section hidden">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="totalCalls">0</h3>
+                                <p>Total Calls</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="uniqueContacts">0</h3>
+                                <p>Unique Contacts</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="uniqueLocations">0</h3>
+                                <p>Unique Locations</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-mobile-alt"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="uniqueDevices">0</h3>
+                                <p>Unique Devices</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Charts -->
+                <div id="quickCharts" class="charts-section hidden">
+                    <div class="chart-row">
+                        <div class="chart-container">
+                            <canvas id="callTypeChart"></canvas>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="timeDistributionChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Track & Trace Tab -->
+            <div id="track" class="tab-content">
+                <div class="tab-header">
+                    <h2><i class="fas fa-search-location"></i> Track & Trace Analysis</h2>
+                </div>
+                <div class="analysis-section">
+                    <!-- Analysis content will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Contact Analysis Tab -->
+            <div id="contacts" class="tab-content">
+                <div class="tab-header">
+                    <h2><i class="fas fa-address-book"></i> Contact Analysis</h2>
+                </div>
+                <div class="analysis-section">
+                    <!-- Analysis content will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Graphs & Visualization Tab -->
+            <div id="graphs" class="tab-content">
+                <div class="tab-header">
+                    <h2><i class="fas fa-chart-bar"></i> Graphs & Visualization</h2>
+                </div>
+                <div class="analysis-section">
+                    <!-- Analysis content will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Search Results Tab -->
+            <div id="search" class="tab-content">
+                <div class="tab-header">
+                    <h2><i class="fas fa-search"></i> Search Results</h2>
+                </div>
+                <div class="analysis-section">
+                    <!-- Analysis content will be populated by JavaScript -->
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            <p>RTF CDR Analyzer v2.0 | Developed by Rifat Ahmed | Contact: 01760502222</p>
+        </footer>
+    </div>
+
+    <!-- Hidden file input -->
+    <input type="file" id="fileInput" accept=".xlsx,.xls,.csv,.txt" style="display: none;">
+
+    <!-- JavaScript Files -->
+    <script src="js/auth.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/file-processor.js"></script>
+    <script src="js/analytics.js"></script>
+    <script src="js/charts.js"></script>
+    <script src="js/export.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>
