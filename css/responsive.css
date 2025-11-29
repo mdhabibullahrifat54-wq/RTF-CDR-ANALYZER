@@ -1,0 +1,189 @@
+/* Mobile First Responsive Design */
+
+/* Tablets and Small Desktops */
+@media (min-width: 768px) and (max-width: 1199px) {
+    .app-main {
+        padding: 20px;
+    }
+    
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .chart-row {
+        grid-template-columns: 1fr;
+    }
+    
+    .nav-tabs {
+        padding: 0 20px;
+    }
+}
+
+/* Mobile Devices */
+@media (max-width: 767px) {
+    .app-header {
+        padding: 15px 20px;
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+    
+    .header-left {
+        flex-direction: column;
+        gap: 5px;
+    }
+    
+    .header-right {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .app-main {
+        padding: 15px;
+    }
+    
+    .nav-tabs {
+        padding: 0 15px;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+    }
+    
+    .tab-btn {
+        padding: 12px 15px;
+        font-size: 14px;
+    }
+    
+    .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .chart-row {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .chart-container {
+        height: 250px;
+        padding: 15px;
+    }
+    
+    .upload-section {
+        padding: 25px 20px;
+    }
+    
+    .upload-box i {
+        font-size: 36px;
+    }
+    
+    .tab-header {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+    
+    .login-box {
+        padding: 30px 20px;
+    }
+    
+    .stat-card {
+        padding: 20px;
+    }
+    
+    .stat-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 20px;
+    }
+}
+
+/* Large Desktop Screens */
+@media (min-width: 1200px) {
+    .app-main {
+        padding: 40px;
+    }
+    
+    .stats-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    
+    .chart-row {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Very Small Mobile Devices */
+@media (max-width: 480px) {
+    .login-container {
+        padding: 10px;
+    }
+    
+    .app-header {
+        padding: 10px 15px;
+    }
+    
+    .app-main {
+        padding: 10px;
+    }
+    
+    .nav-tabs {
+        padding: 0 10px;
+    }
+    
+    .tab-btn {
+        padding: 10px 12px;
+        font-size: 12px;
+    }
+    
+    .upload-section {
+        padding: 20px 15px;
+    }
+    
+    .stat-card {
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+    }
+}
+
+/* Landscape Mobile Optimization */
+@media (max-height: 600px) and (orientation: landscape) {
+    .login-container {
+        padding: 10px;
+    }
+    
+    .login-box {
+        padding: 20px;
+    }
+    
+    .app-main {
+        padding: 15px;
+    }
+}
+
+/* High DPI Screens */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .stat-icon,
+    .upload-box i {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+}
+
+/* Print Styles */
+@media print {
+    .app-nav,
+    .app-footer,
+    .upload-btn,
+    .logout-btn {
+        display: none !important;
+    }
+    
+    .app-main {
+        padding: 0;
+    }
+    
+    .tab-content {
+        display: block !important;
+    }
+}
