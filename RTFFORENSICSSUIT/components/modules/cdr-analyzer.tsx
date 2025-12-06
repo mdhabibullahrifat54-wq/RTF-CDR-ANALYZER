@@ -338,9 +338,9 @@ export default function CDRAnalyzer() {
                                 borderRadius: "8px",
                               }}
                               labelStyle={{ color: "#f9fafb" }}
-                              formatter={(value: number, name: string, props: { payload: { fullNumber: string } }) => [
+                              formatter={(value: number, name: string, props: { payload?: { fullNumber: string } }) => [
                                 value,
-                                props.payload.fullNumber,
+                                props.payload?.fullNumber || name,
                               ]}
                             />
                             <Bar dataKey="count" radius={[0, 4, 4, 0]}>

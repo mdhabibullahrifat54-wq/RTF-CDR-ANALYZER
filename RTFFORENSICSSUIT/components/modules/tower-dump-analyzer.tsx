@@ -298,9 +298,9 @@ export default function TowerDumpAnalyzer() {
                               border: "1px solid #0ea5e9",
                               borderRadius: "8px",
                             }}
-                            formatter={(value: number, name: string, props: { payload: { fullNumber: string } }) => [
+                            formatter={(value: number, name: string, props: { payload?: { fullNumber: string } }) => [
                               `${value} hits`,
-                              props.payload.fullNumber,
+                              props.payload?.fullNumber || name,
                             ]}
                           />
                           <Bar dataKey="count" radius={[0, 4, 4, 0]}>
