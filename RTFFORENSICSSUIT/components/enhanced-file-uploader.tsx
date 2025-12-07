@@ -10,6 +10,7 @@ import { Upload, FileSpreadsheet, FileText, AlertCircle, CheckCircle, X, Loader2
 import { parseFile, type ParsedData, formatFileSize } from "@/lib/file-parser"
 import { type ColumnMapping, applyMappingsToData } from "@/lib/column-mapping"
 import ColumnMapper from "@/components/column-mapper"
+import { env } from "@/lib/env"
 
 interface EnhancedFileUploaderProps {
   onComplete: (data: ParsedData) => void
@@ -21,7 +22,6 @@ interface EnhancedFileUploaderProps {
 type UploadStep = "upload" | "mapping" | "processing" | "complete"
 
 const DEFAULT_ACCEPTED_FORMATS = [".csv", ".xlsx", ".xls", ".txt"]
-const DEFAULT_MAX_SIZE_MB = 50
 
 export default function EnhancedFileUploader({
   onComplete,
@@ -30,7 +30,7 @@ export default function EnhancedFileUploader({
   maxSizeMB,
 }: EnhancedFileUploaderProps) {
   const formats = acceptedFormats ?? DEFAULT_ACCEPTED_FORMATS
-  const maxSize = maxSizeMB ?? DEFAULT_MAX_SIZE_MB
+  const maxSize = maxSizeMB ?? env.maxUploadSizeMB
 
   const [step, setStep] = useState<UploadStep>("upload")
   const [file, setFile] = useState<File | null>(null)

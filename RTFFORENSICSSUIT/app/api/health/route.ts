@@ -1,15 +1,17 @@
 import { NextResponse } from "next/server"
+import { APP_CONFIG } from "@/lib/constants"
 
 export async function GET() {
   const healthCheck = {
     status: "healthy",
     timestamp: new Date().toISOString(),
     uptime: process.uptime ? process.uptime() : 0,
-    service: "RTF Forensics Suite",
-    version: "2.0.0",
+    service: APP_CONFIG.name,
+    version: APP_CONFIG.version,
     checks: {
       api: "operational",
       memory: getMemoryStatus(),
+      geolocation: process.env.UNWIREDLABS_API_TOKEN ? "configured" : "not_configured",
     },
   }
 

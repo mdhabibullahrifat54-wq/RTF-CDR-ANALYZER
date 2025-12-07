@@ -1,20 +1,22 @@
 import { NextResponse } from "next/server"
+import { APP_CONFIG } from "@/lib/constants"
 
 const VERSION_INFO = {
-  name: "RTF Forensics Suite",
-  version: "2.0.0",
-  releaseDate: "2025-06-04",
-  developer: "Rifat Ahmed",
-  framework: "Next.js 16.0.7",
-  react: "19.2.0",
+  name: APP_CONFIG.name,
+  version: APP_CONFIG.version,
+  releaseDate: APP_CONFIG.releaseDate,
+  developer: APP_CONFIG.developer,
+  framework: "Next.js 15",
+  react: "19",
   features: [
     "CDR Analysis",
     "Tower Dump Analysis",
     "Drive Test Analysis",
     "Mutual Communication",
-    "GEO Intelligence",
+    "GEO Intelligence (UnwiredLabs API)",
     "Report Generation",
   ],
+  integrations: ["UnwiredLabs Geolocation API"],
   changelog: "/CHANGELOG.md",
 }
 

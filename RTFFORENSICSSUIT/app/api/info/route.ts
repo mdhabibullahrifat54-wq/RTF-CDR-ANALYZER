@@ -1,7 +1,10 @@
 import { NextResponse } from "next/server"
-import { APP_CONFIG } from "@/lib/constants"
+import { APP_CONFIG, API_ENDPOINTS } from "@/lib/constants"
+import { checkUnwiredLabsConfig } from "@/lib/env"
 
 export async function GET() {
+  const unwiredLabsStatus = checkUnwiredLabsConfig()
+
   const appInfo = {
     name: APP_CONFIG.name,
     version: APP_CONFIG.version,
@@ -20,10 +23,15 @@ export async function GET() {
       darkMode: true,
       lightMode: true,
     },
+    integrations: {
+      unwiredLabs: {
+        configured: unwiredLabsStatus.configured,
+        region: unwiredLabsStatus.region,
+        service: "Cell Tower Geolocation API",
+      },
+    },
     endpoints: {
-      health: "/api/health",
-      version: "/api/version",
-      info: "/api/info",
+      ...API_ENDPOINTS,
     },
   }
 

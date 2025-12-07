@@ -2,6 +2,7 @@
 
 import { createContext, useContext, useState, useCallback, useEffect, type ReactNode } from "react"
 import type { ParsedData } from "@/lib/file-parser"
+import { env } from "@/lib/env"
 
 interface AnalysisSession {
   id: string
@@ -60,7 +61,7 @@ export function DataStoreProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (isInitialized && typeof window !== "undefined") {
       try {
-        // Only store essential data to avoid localStorage limits
+        const maxStoredRows = Math.min(env.maxRowsPreview, 100)
         const toStore = sessions.map((s) => ({
           id: s.id,
           module: s.module,
@@ -68,7 +69,7 @@ export function DataStoreProvider({ children }: { children: ReactNode }) {
           uploadedAt: s.uploadedAt.toISOString(),
           data: {
             headers: s.data.headers,
-            rows: s.data.rows.slice(0, 100), // Limit stored rows
+            rows: s.data.rows.slice(0, maxStoredRows),
             analytics: s.data.analytics,
             metadata: s.data.metadata,
           },

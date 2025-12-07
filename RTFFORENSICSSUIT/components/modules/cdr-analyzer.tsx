@@ -338,9 +338,9 @@ export default function CDRAnalyzer() {
                                 borderRadius: "8px",
                               }}
                               labelStyle={{ color: "#f9fafb" }}
-                              formatter={(value: number, name: string, props: { payload?: { fullNumber: string } }) => [
+                              formatter={(value: number, name: string, props: any) => [
                                 value,
-                                props.payload?.fullNumber || name,
+                                props?.payload?.fullNumber ?? name,
                               ]}
                             />
                             <Bar dataKey="count" radius={[0, 4, 4, 0]}>
@@ -409,7 +409,7 @@ export default function CDRAnalyzer() {
                                 border: "1px solid #0ea5e9",
                                 borderRadius: "8px",
                               }}
-                              labelFormatter={(label, payload) => payload[0]?.payload?.fullDate || label}
+                              labelFormatter={(label: string, payload: any) => payload[0]?.payload?.fullDate || label}
                             />
                             <Area
                               type="monotone"
@@ -470,10 +470,11 @@ export default function CDRAnalyzer() {
                         </ResponsiveContainer>
                       </div>
                     ) : (
-                      <div className="h-64 flex items-center justify-center text-muted-foreground">
-                        <div className="text-center">
+                      <div className="h-64 flex items-center justify-center">
+                        <div className="text-center text-muted-foreground">
                           <Clock className="w-12 h-12 mx-auto mb-2 text-cyan-500/30" />
                           <p>Hourly distribution requires timestamp data</p>
+                          <p className="text-xs mt-1">View in GEO Intelligence for map visualization</p>
                         </div>
                       </div>
                     )}

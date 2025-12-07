@@ -13,6 +13,7 @@ import {
   Download,
 } from "lucide-react"
 import { transformRowsToCSV } from "@/lib/file-parser"
+import { env } from "@/lib/env"
 
 interface DataTableProps {
   columns: string[]
@@ -22,6 +23,7 @@ interface DataTableProps {
   enableSorting?: boolean
   enableExport?: boolean
   title?: string
+  maxRowsPreview?: number
 }
 
 type SortDirection = "asc" | "desc" | null
@@ -34,10 +36,20 @@ export default function DataTable({
   enableSorting = true,
   enableExport = false,
   title,
+  maxRowsPreview = env.maxRowsPreview,
 }: DataTableProps) {
   const [currentPage, setCurrentPage] = useState(1)
   const [sortColumn, setSortColumn] = useState<string | null>(null)
   const [sortDirection, setSortDirection] = useState<SortDirection>(null)
+
+  const limitedData = useMemo(() => {
+    if (data.length > maxRowsPreview) {
+      return data.slice(0, maxRowsPreview)
+    }
+    return data
+  }, [data, maxRowsPreview])
+
+  const isTruncated = data.length > maxRowsPreview
 
   const handleSort = useCallback((column: string) => {
     setSortColumn((prevColumn) => {
@@ -57,7 +69,7 @@ export default function DataTable({
   }, [])
 
   const filteredAndSortedData = useMemo(() => {
-    let result = data
+    let result = limitedData
 
     // Filter
     if (searchQuery) {
@@ -86,7 +98,7 @@ export default function DataTable({
     }
 
     return result
-  }, [data, searchQuery, sortColumn, sortDirection])
+  }, [limitedData, searchQuery, sortColumn, sortDirection])
 
   // Reset page when data changes
   useMemo(() => {
@@ -99,7 +111,7 @@ export default function DataTable({
   const currentData = filteredAndSortedData.slice(startIndex, endIndex)
 
   const handleExport = useCallback(() => {
-    const csv = transformRowsToCSV(columns, filteredAndSortedData)
+    const csv = transformRowsToCSV(columns, data)
     const blob = new Blob([csv], { type: "text/csv" })
     const url = URL.createObjectURL(blob)
     const link = document.createElement("a")
@@ -109,7 +121,7 @@ export default function DataTable({
     link.click()
     document.body.removeChild(link)
     URL.revokeObjectURL(url)
-  }, [columns, filteredAndSortedData, title])
+  }, [columns, data, title])
 
   // Generate page numbers to show
   const getPageNumbers = () => {
@@ -141,11 +153,18 @@ export default function DataTable({
 
   return (
     <div className="space-y-4">
+      {isTruncated && (
+        <div className="px-4 py-2 bg-amber-500/10 border border-amber-500/30 rounded-lg text-sm text-amber-200">
+          Showing first {maxRowsPreview.toLocaleString()} of {data.length.toLocaleString()} rows for performance. Export
+          to view all data.
+        </div>
+      )}
+
       {enableExport && filteredAndSortedData.length > 0 && (
         <div className="flex justify-end">
           <Button variant="outline" size="sm" onClick={handleExport} className="gap-2 bg-transparent">
             <Download className="w-4 h-4" />
-            Export CSV
+            Export CSV {isTruncated && `(all ${data.length.toLocaleString()} rows)`}
           </Button>
         </div>
       )}

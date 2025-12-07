@@ -4,6 +4,7 @@ import type { ModuleType } from "@/components/dashboard"
 import { useAuth } from "@/lib/auth-context"
 import { useDataStore } from "@/lib/data-store"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
 import { DeveloperCredit } from "@/components/developer-credit"
 import {
   PhoneCall,
@@ -20,6 +21,8 @@ import {
   Activity,
   MapPin,
   Building2,
+  Shield,
+  ExternalLink,
 } from "lucide-react"
 
 interface DashboardHomeProps {
@@ -29,23 +32,33 @@ interface DashboardHomeProps {
 const moduleCards = [
   {
     id: "cdr" as ModuleType,
-    title: "CDR Analyzer",
-    description: "Analyze Call Detail Records from mobile operators",
+    title: "RTF CDR Analyzer",
+    description: "Analyze Call Detail Records with 27 forensic algorithms",
     icon: PhoneCall,
     color: "text-cyan-500 dark:text-cyan-400",
     bgColor: "bg-cyan-500/10",
     borderColor: "border-cyan-500/20",
-    features: ["B-party analysis", "Timeline charts", "IMEI tracking", "Duration analysis"],
+    features: ["Full classified report", "Exact call locations", "Threat score & red flags", "15-45 sec analysis"],
   },
   {
     id: "tower" as ModuleType,
-    title: "Tower Dump Analyzer",
-    description: "Process cell tower dump files for device identification",
+    title: "RTF Tower Dump Analyzer",
+    description: "Cross-operator tower dump analysis for device identification",
     icon: Radio,
     color: "text-blue-500 dark:text-blue-400",
     bgColor: "bg-blue-500/10",
     borderColor: "border-blue-500/20",
-    features: ["Hit frequency", "Co-presence detection", "Geo mapping", "Timeline"],
+    features: ["GP/Robi/BL/Teletalk", "Cross-operator matching", "Fake tower detection", "Merged intelligence"],
+  },
+  {
+    id: "geo" as ModuleType,
+    title: "Movement Road Map",
+    description: "Generate complete travel routes with address-level details",
+    icon: Map,
+    color: "text-emerald-500 dark:text-emerald-400",
+    bgColor: "bg-emerald-500/10",
+    borderColor: "border-emerald-500/20",
+    features: ["MSISDN/IMEI tracking", "Speed analysis", "Night movement alerts", "PDF/Excel export"],
   },
   {
     id: "drive" as ModuleType,
@@ -68,24 +81,14 @@ const moduleCards = [
     features: ["Cluster analysis", "Communication tree", "Time windows", "Link strength"],
   },
   {
-    id: "geo" as ModuleType,
-    title: "GEO Intelligence",
-    description: "Map-based visualization of telecom activity",
-    icon: Map,
-    color: "text-emerald-500 dark:text-emerald-400",
-    bgColor: "bg-emerald-500/10",
-    borderColor: "border-emerald-500/20",
-    features: ["Tower plotting", "Movement maps", "Heatmaps", "Multi-layer"],
-  },
-  {
     id: "reports" as ModuleType,
     title: "Reporting Engine",
-    description: "Generate unified reports for all modules",
+    description: "Generate official legal-ready reports",
     icon: FileText,
     color: "text-indigo-500 dark:text-indigo-400",
     bgColor: "bg-indigo-500/10",
     borderColor: "border-indigo-500/20",
-    features: ["PDF export", "Excel export", "Custom reports", "Case info"],
+    features: ["PDF export", "Excel export", "Case number", "Legal format"],
   },
 ]
 
@@ -103,6 +106,7 @@ export default function DashboardHome({ onSelectModule }: DashboardHomeProps) {
 
   return (
     <div className="p-8 space-y-8 max-w-[1600px] mx-auto">
+      {/* Header with Admin Panel Button */}
       <div className="flex items-start justify-between">
         <div>
           <div className="flex items-center gap-3 mb-2">
@@ -123,7 +127,16 @@ export default function DashboardHome({ onSelectModule }: DashboardHomeProps) {
           </div>
           <p className="text-muted-foreground mt-3">Select a module below to begin your telecom analysis</p>
         </div>
-        <div className="text-right">
+
+        <div className="flex items-center gap-4">
+          <Button
+            onClick={() => window.open("/control-panel", "_blank")}
+            className="h-12 px-6 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white font-bold shadow-lg shadow-red-500/30 border border-red-500/50"
+          >
+            <Shield className="w-5 h-5 mr-2" />
+            ADMINISTRATOR PANEL
+            <ExternalLink className="w-4 h-4 ml-2" />
+          </Button>
           <Card className="bg-card/50 border-primary/20 px-4 py-3">
             <p className="text-xs text-muted-foreground">Session started</p>
             <p className="text-sm font-medium text-primary">
@@ -133,6 +146,7 @@ export default function DashboardHome({ onSelectModule }: DashboardHomeProps) {
         </div>
       </div>
 
+      {/* Stats cards */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <Card className="bg-card border-cyan-500/20 hover:border-cyan-500/40 transition-colors">
           <CardContent className="p-5">
@@ -235,7 +249,7 @@ export default function DashboardHome({ onSelectModule }: DashboardHomeProps) {
           </div>
         </div>
 
-        {/* Recent sessions */}
+        {/* Recent sessions and Quick Start */}
         <div className="space-y-4">
           <h2 className="text-lg font-semibold text-foreground flex items-center gap-2">
             <span className="w-1 h-5 bg-gradient-to-b from-cyan-500 to-blue-500 rounded-full" />
@@ -256,7 +270,7 @@ export default function DashboardHome({ onSelectModule }: DashboardHomeProps) {
                       <div className="flex-1 min-w-0">
                         <p className="text-sm font-medium truncate">{session.fileName}</p>
                         <p className="text-xs text-muted-foreground">
-                          {session.module.toUpperCase()} • {session.data.rows.length} records
+                          {session.module.toUpperCase()} - {session.data.rows.length} records
                         </p>
                       </div>
                       <div className="text-right shrink-0">
@@ -279,7 +293,7 @@ export default function DashboardHome({ onSelectModule }: DashboardHomeProps) {
             <CardHeader className="pb-3">
               <CardTitle className="text-sm flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-primary" />
-                Quick Start Guide
+                Operational Workflow
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-3">
@@ -287,19 +301,39 @@ export default function DashboardHome({ onSelectModule }: DashboardHomeProps) {
                 <div className="w-6 h-6 rounded-full bg-gradient-to-br from-cyan-500 to-blue-500 flex items-center justify-center text-xs font-medium text-white shrink-0">
                   1
                 </div>
-                <p className="text-sm text-muted-foreground">Select an analysis module from the grid above</p>
+                <div>
+                  <p className="text-sm font-medium text-foreground">CDR Forensic Analysis</p>
+                  <p className="text-xs text-muted-foreground">
+                    Upload CDR file, click START FORENSIC ANALYSIS (15-45 sec)
+                  </p>
+                </div>
               </div>
               <div className="flex items-start gap-3">
                 <div className="w-6 h-6 rounded-full bg-gradient-to-br from-cyan-500 to-blue-500 flex items-center justify-center text-xs font-medium text-white shrink-0">
                   2
                 </div>
-                <p className="text-sm text-muted-foreground">Upload your data file (XLS, XLSX, CSV, TXT)</p>
+                <div>
+                  <p className="text-sm font-medium text-foreground">Tower Dump Analysis</p>
+                  <p className="text-xs text-muted-foreground">Upload files for GP/Robi/BL/Teletalk, click MERGE ALL</p>
+                </div>
               </div>
               <div className="flex items-start gap-3">
                 <div className="w-6 h-6 rounded-full bg-gradient-to-br from-cyan-500 to-blue-500 flex items-center justify-center text-xs font-medium text-white shrink-0">
                   3
                 </div>
-                <p className="text-sm text-muted-foreground">Review analytics and export your reports</p>
+                <div>
+                  <p className="text-sm font-medium text-foreground">Movement Road Map</p>
+                  <p className="text-xs text-muted-foreground">Enter MSISDN/IMEI, select date range, generate path</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <div className="w-6 h-6 rounded-full bg-gradient-to-br from-emerald-500 to-green-500 flex items-center justify-center text-xs font-medium text-white shrink-0">
+                  4
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-foreground">Create Official Report</p>
+                  <p className="text-xs text-muted-foreground">Generate PDF/Excel with case number & legal format</p>
+                </div>
               </div>
             </CardContent>
           </Card>

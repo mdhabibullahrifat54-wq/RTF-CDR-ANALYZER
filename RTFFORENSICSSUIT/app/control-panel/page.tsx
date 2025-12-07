@@ -38,10 +38,10 @@ export default function ControlPanelPage() {
   }, [])
 
   const handleLogin = (username: string, password: string): boolean => {
-    if (username === "rifat_admin" && password === "admin123") {
+    if (username === "rifat_admin" && password === "admin") {
       const session = {
         username,
-        role: "System Administrator",
+        role: "Super Administrator",
         loginTime: new Date().toISOString(),
         accessLevel: 3,
       }
@@ -56,7 +56,7 @@ export default function ControlPanelPage() {
       const logs = JSON.parse(localStorage.getItem("rtf_admin_audit_logs") || "[]")
       logs.push({
         id: Date.now(),
-        action: "Admin Login",
+        action: "Super Administrator Login",
         user: username,
         timestamp: new Date().toISOString(),
         status: "success",
@@ -74,7 +74,7 @@ export default function ControlPanelPage() {
       const logs = JSON.parse(localStorage.getItem("rtf_admin_audit_logs") || "[]")
       logs.push({
         id: Date.now(),
-        action: "Admin Logout",
+        action: "Super Administrator Logout",
         user: adminUser.username,
         timestamp: new Date().toISOString(),
         status: "success",

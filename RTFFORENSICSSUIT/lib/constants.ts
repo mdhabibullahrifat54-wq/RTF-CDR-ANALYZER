@@ -1,13 +1,19 @@
+// ============================================
 // Application Constants
+// RTF Forensics Suite v8.0
+// Bangladesh Law Enforcement Edition
+// ============================================
+
 export const APP_CONFIG = {
   name: "RTF Forensics Suite",
-  version: "2.0.0",
+  version: "8.0.0",
   developer: "Rifat Ahmed",
-  releaseDate: "2025-06-04",
-  description: "Professional Telecom Forensics Analysis Platform",
+  releaseDate: "2025-12-08",
+  description: "Professional Telecom Forensics Analysis Platform - Bangladesh Law Enforcement Edition",
   copyright: "2025 Rifat Ahmed. All rights reserved.",
   supportEmail: "support@rtfforensics.com",
   documentationUrl: "/docs",
+  edition: "Bangladesh Law Enforcement Edition",
 } as const
 
 // Module Configuration
@@ -17,7 +23,7 @@ export const MODULES = {
   tower: { id: "tower", label: "Tower Dump", description: "Cell tower data analysis", icon: "Radio" },
   drive: { id: "drive", label: "Drive Test", description: "Route and coverage analysis", icon: "Route" },
   mutual: { id: "mutual", label: "Mutual Comm", description: "Link and cluster analysis", icon: "Users" },
-  geo: { id: "geo", label: "GEO Intelligence", description: "Map visualization", icon: "Map" },
+  geo: { id: "geo", label: "GEO Intelligence", description: "Cell tower geolocation (UnwiredLabs)", icon: "Map" },
   reports: { id: "reports", label: "Reports", description: "Generate PDF reports", icon: "FileText" },
 } as const
 
@@ -123,6 +129,7 @@ export const EXPORT_FORMATS = {
   html: { id: "html", label: "HTML Report", extension: ".html", mimeType: "text/html" },
 } as const
 
+// Bangladesh Operator Colors
 export const OPERATOR_COLORS: Record<string, string> = {
   GP: "#22d3ee",
   Grameenphone: "#22d3ee",
@@ -134,6 +141,7 @@ export const OPERATOR_COLORS: Record<string, string> = {
   default: "#6b7280",
 } as const
 
+// Validation Patterns
 export const VALIDATION_PATTERNS = {
   bangladeshPhone: /^(?:\+?880|0)?1[3-9]\d{8}$/,
   imei: /^\d{14,15}$/,
@@ -144,8 +152,49 @@ export const VALIDATION_PATTERNS = {
   mnc: /^\d{2,3}$/,
 } as const
 
+// API Endpoints
 export const API_ENDPOINTS = {
   health: "/api/health",
   version: "/api/version",
   info: "/api/info",
+  geolocation: "/api/geolocation",
+  geolocationStatus: "/api/geolocation/status",
 } as const
+
+// UnwiredLabs Configuration
+export const UNWIREDLABS_CONFIG = {
+  endpoints: {
+    US_EAST: "https://us1.unwiredlabs.com/v2/process.php",
+    US_WEST: "https://us2.unwiredlabs.com/v2/process.php",
+    EUROPE: "https://eu1.unwiredlabs.com/v2/process.php",
+    ASIA_PACIFIC: "https://ap1.unwiredlabs.com/v2/process.php",
+  },
+  defaultRegion: "ASIA_PACIFIC" as const,
+  timeout: 30000,
+  retries: 3,
+  retryDelay: 1000,
+  maxBatchSize: 100,
+  radioTypes: ["gsm", "cdma", "umts", "lte", "nr"] as const,
+} as const
+
+// Bangladesh MCC/MNC
+export const BANGLADESH_NETWORK = {
+  mcc: "470",
+  operators: {
+    "01": { name: "Grameenphone", shortName: "GP", color: "#22d3ee" },
+    "02": { name: "Robi", shortName: "Robi", color: "#f43f5e" },
+    "03": { name: "Banglalink", shortName: "BL", color: "#3b82f6" },
+    "04": { name: "Teletalk", shortName: "Teletalk", color: "#f59e0b" },
+    "07": { name: "Airtel", shortName: "Airtel", color: "#ef4444" },
+  },
+} as const
+
+// Helper function to get operator info
+export function getBangladeshOperator(mnc: string): {
+  name: string
+  shortName: string
+  color: string
+} | null {
+  const operator = BANGLADESH_NETWORK.operators[mnc as keyof typeof BANGLADESH_NETWORK.operators]
+  return operator || null
+}

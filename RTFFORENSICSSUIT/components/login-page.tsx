@@ -7,12 +7,13 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Lock, AlertCircle, Monitor, Shield, Search, Activity, Code2, Heart } from "lucide-react"
+import { Lock, AlertCircle, Monitor, Shield, Search, Activity, Code2, Heart, FileText } from "lucide-react"
 import Logo from "@/components/logo"
 import ThanaSelector from "@/components/thana-selector"
 import { getTotalThanaCount } from "@/lib/bangladesh-thanas"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { APP_CONFIG } from "@/lib/constants"
+import Link from "next/link"
 
 export default function LoginPage() {
   const [selectedThana, setSelectedThana] = useState("")
@@ -65,7 +66,8 @@ export default function LoginPage() {
 
         <div className="relative z-10">
           <Logo size="xl" />
-          <p className="mt-8 text-lg text-muted-foreground max-w-lg leading-relaxed">
+          <p className="mt-2 text-sm text-cyan-400 font-medium">{APP_CONFIG.edition}</p>
+          <p className="mt-6 text-lg text-muted-foreground max-w-lg leading-relaxed">
             Professional telecom forensics analysis platform for law enforcement and investigation agencies.
           </p>
 
@@ -77,7 +79,7 @@ export default function LoginPage() {
             </div>
             <div className="flex items-center gap-2 text-sm text-primary">
               <Search className="w-4 h-4" />
-              <span>Deep Insights</span>
+              <span>27 Algorithms</span>
             </div>
             <div className="flex items-center gap-2 text-sm text-primary">
               <Activity className="w-4 h-4" />
@@ -90,26 +92,26 @@ export default function LoginPage() {
           <div className="grid grid-cols-2 gap-4">
             <div className="p-4 rounded-xl bg-cyan-950/30 dark:bg-cyan-950/30 bg-cyan-100/50 border border-cyan-500/20 backdrop-blur-sm">
               <h3 className="font-semibold text-sm text-primary">CDR Analysis</h3>
-              <p className="text-xs text-muted-foreground mt-1">Call detail record processing</p>
+              <p className="text-xs text-muted-foreground mt-1">27 forensic algorithms applied</p>
             </div>
             <div className="p-4 rounded-xl bg-blue-950/30 dark:bg-blue-950/30 bg-blue-100/50 border border-blue-500/20 backdrop-blur-sm">
               <h3 className="font-semibold text-sm text-accent">Tower Dump</h3>
-              <p className="text-xs text-muted-foreground mt-1">Cell tower data analysis</p>
+              <p className="text-xs text-muted-foreground mt-1">Cross-operator analysis</p>
             </div>
             <div className="p-4 rounded-xl bg-blue-950/30 dark:bg-blue-950/30 bg-blue-100/50 border border-blue-500/20 backdrop-blur-sm">
-              <h3 className="font-semibold text-sm text-accent">GEO Intelligence</h3>
-              <p className="text-xs text-muted-foreground mt-1">Location-based mapping</p>
+              <h3 className="font-semibold text-sm text-accent">Movement Map</h3>
+              <p className="text-xs text-muted-foreground mt-1">Address-level tracking</p>
             </div>
             <div className="p-4 rounded-xl bg-cyan-950/30 dark:bg-cyan-950/30 bg-cyan-100/50 border border-cyan-500/20 backdrop-blur-sm">
-              <h3 className="font-semibold text-sm text-primary">Link Analysis</h3>
-              <p className="text-xs text-muted-foreground mt-1">Communication patterns</p>
+              <h3 className="font-semibold text-sm text-primary">Official Reports</h3>
+              <p className="text-xs text-muted-foreground mt-1">Legal-ready format</p>
             </div>
           </div>
 
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-2 text-xs text-muted-foreground">
               <Monitor className="w-4 h-4" />
-              <span>Optimized for desktop use</span>
+              <span>System Online 24/7</span>
             </div>
             <div className="h-3 w-px bg-border" />
             <div className="text-xs text-primary">{totalThanas}+ Police Stations Connected</div>
@@ -148,11 +150,12 @@ export default function LoginPage() {
           {/* Mobile logo */}
           <div className="lg:hidden text-center">
             <Logo size="lg" className="justify-center" />
+            <p className="mt-2 text-sm text-cyan-400 font-medium">{APP_CONFIG.edition}</p>
           </div>
 
           <Card className="border-primary/20 bg-card/80 backdrop-blur-sm shadow-2xl shadow-primary/5">
             <CardHeader className="space-y-1 pb-6">
-              <CardTitle className="text-2xl text-center">Welcome Back</CardTitle>
+              <CardTitle className="text-2xl text-center">Police Station Login</CardTitle>
               <CardDescription className="text-center">
                 Select your Police Station and enter credentials
               </CardDescription>
@@ -191,7 +194,7 @@ export default function LoginPage() {
                     <Input
                       id="password"
                       type="password"
-                      placeholder="Enter password"
+                      placeholder="••••••••"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       className="pl-10 h-11 bg-secondary/50 border-border focus:border-primary/50 focus:ring-primary/20"
@@ -199,6 +202,7 @@ export default function LoginPage() {
                       autoComplete="current-password"
                     />
                   </div>
+                  <p className="text-xs text-muted-foreground">Password is masked for security</p>
                 </div>
 
                 <Button
@@ -212,10 +216,20 @@ export default function LoginPage() {
                       Authenticating...
                     </span>
                   ) : (
-                    "Sign In"
+                    "LOGIN"
                   )}
                 </Button>
               </form>
+
+              <div className="mt-4 pt-4 border-t border-border">
+                <Link
+                  href="/terms"
+                  className="flex items-center justify-center gap-2 text-xs text-muted-foreground hover:text-primary transition-colors"
+                >
+                  <FileText className="w-3.5 h-3.5" />
+                  <span>Terms & Conditions of Use</span>
+                </Link>
+              </div>
             </CardContent>
           </Card>
 
