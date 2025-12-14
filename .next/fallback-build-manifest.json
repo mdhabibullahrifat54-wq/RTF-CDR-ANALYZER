@@ -1,0 +1,12 @@
+{
+  "pages": {
+    "/_app": []
+  },
+  "devFiles": [],
+  "polyfillFiles": [],
+  "lowPriorityFiles": [
+    "static/DcDV3-P8660T-eWu6vRyD/_ssgManifest.js",
+    "static/DcDV3-P8660T-eWu6vRyD/_buildManifest.js"
+  ],
+  "rootMainFiles": []
+}

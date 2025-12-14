@@ -1,0 +1,3 @@
+module.exports=[72507,a=>{"use strict";var b=a.i(26806);function c({children:a}){return(0,b.jsx)("div",{className:"min-w-[1280px]",children:a})}a.s(["default",()=>c,"metadata",0,{title:"RTF Control Panel | Website Administration",description:"Administrative Control Panel for RTF Forensics Suite - User Management, Security, and System Configuration",keywords:["admin","control panel","user management","security"],authors:[{name:"Rifat Ahmed"}],robots:"noindex, nofollow"},"viewport",0,{themeColor:"#d97706",width:1280,initialScale:.5,minimumScale:.25,maximumScale:2,userScalable:!0}])}];
+
+//# sourceMappingURL=app_control-panel_layout_tsx_cf0e16c7._.js.map

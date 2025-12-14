@@ -1,29 +1,164 @@
-# RTF CDR Analyzer v2.0
+# RTF Forensics Suite v2.0
 
-A comprehensive web-based CDR (Call Detail Records) analysis tool for telecommunications data analysis.
+Professional Telecom Forensics Analysis Platform for law enforcement and investigation agencies.
 
-## 🚀 Features
+## Overview
 
-- **Multi-format Support**: Excel (.xlsx, .xls), CSV (.csv), Text (.txt)
-- **Advanced Analytics**: Contact analysis, location tracking, temporal patterns
-- **Interactive Visualizations**: Charts and graphs for data insights
-- **Export Capabilities**: Excel, PDF, and image exports
-- **Responsive Design**: Works on desktop, tablet, and mobile devices
-- **Client-side Processing**: No data leaves your device
+RTF Forensics Suite is a comprehensive telecom analysis platform designed for investigators and law enforcement agencies. It provides powerful tools for analyzing Call Detail Records (CDR), tower dumps, drive tests, and generating geo-intelligence reports.
 
-## 📋 Prerequisites
+**Developer:** Rifat Ahmed
 
-- Android device with Termux installed
-- Python 3.x
-- Modern web browser (Chrome, Firefox, Safari, Edge)
+## Features
 
-## 🔧 Installation & Deployment
+- **CDR Analyzer** - Parse and analyze call detail records with timeline visualization
+- **Tower Dump Analysis** - Analyze cell tower data with hit frequency and co-presence detection
+- **Drive Test Analyzer** - Route analysis and coverage mapping
+- **Mutual Communication** - Link analysis between multiple numbers
+- **GEO Intelligence** - Map visualization with tower locations and movement patterns
+- **Report Generation** - Professional PDF reports with charts and analysis
 
-### Method 1: Local Network Access
+## Tech Stack
 
-1. **Install Termux** from F-Droid store
+- **Framework:** Next.js 16.0.7
+- **UI:** React 19.2, Tailwind CSS, shadcn/ui
+- **Charts:** Recharts
+- **Maps:** Leaflet
+- **PDF Generation:** jsPDF
 
-2. **Update packages and install Python**:
-   ```bash
-   pkg update && pkg upgrade
-   pkg install python wget
+## Installation
+
+### Using shadcn CLI (Recommended)
+
+\`\`\`bash
+npx shadcn@latest init
+\`\`\`
+
+### Manual Installation
+
+\`\`\`bash
+# Clone the repository
+git clone <repository-url>
+
+# Install dependencies
+npm install
+
+# Run development server
+npm run dev
+\`\`\`
+
+## Environment Variables
+
+Create a `.env.local` file:
+
+\`\`\`env
+# Application
+NEXT_PUBLIC_APP_VERSION=2.0.0
+NEXT_PUBLIC_APP_NAME=RTF Forensics Suite
+
+# Optional: API endpoints
+# API_BASE_URL=https://api.example.com
+\`\`\`
+
+## Project Structure
+
+\`\`\`
+├── app/                    # Next.js app router
+│   ├── api/               # API routes
+│   ├── control-panel/     # Admin control panel
+│   └── page.tsx           # Main entry point
+├── components/            # React components
+│   ├── modules/           # Feature modules
+│   └── ui/                # UI components
+├── lib/                   # Utilities and helpers
+│   ├── auth-context.tsx   # Authentication
+│   ├── data-store.tsx     # State management
+│   ├── file-parser.ts     # File parsing utilities
+│   └── column-mapping.ts  # Column mapping logic
+└── public/                # Static assets
+\`\`\`
+
+## Modules
+
+### CDR Analyzer
+- Upload and parse CDR files (CSV, Excel)
+- Auto/Manual column mapping
+- Timeline visualization
+- Call pattern analysis
+
+### Tower Dump Analyzer
+- Cell tower data analysis
+- Hit frequency charts
+- Co-presence detection
+- Multiple file comparison
+
+### Mutual Communication
+- Two-file analysis
+- Mutual contact detection
+- Cluster analysis
+- Communication pattern visualization
+
+### GEO Intelligence
+- Interactive map visualization
+- Tower location plotting
+- Movement pattern analysis
+- Heat maps
+
+### Report Engine
+- Professional PDF generation
+- Multiple report templates
+- Custom branding
+- Chart exports
+
+## API Endpoints
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/api/health` | GET | Health check |
+| `/api/version` | GET | Version info |
+
+## Deployment
+
+### Vercel (Recommended)
+
+Click the "Publish" button in v0 or deploy via Vercel CLI:
+
+\`\`\`bash
+vercel deploy
+\`\`\`
+
+### Docker
+
+\`\`\`bash
+docker build -t rtf-forensics-suite .
+docker run -p 3000:3000 rtf-forensics-suite
+\`\`\`
+
+## Testing
+
+\`\`\`bash
+# Run tests
+npm test
+
+# Run linting
+npm run lint
+
+# Type check
+npm run type-check
+\`\`\`
+
+## Version History
+
+See [CHANGELOG.md](./CHANGELOG.md) for release history.
+
+## License
+
+Proprietary - All rights reserved.
+
+## Support
+
+For support inquiries, contact the development team.
+
+---
+
+**RTF Forensics Suite v2.0** - Professional Telecom Analysis Platform  
+Developed by **Rifat Ahmed**
